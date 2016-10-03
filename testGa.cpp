@@ -22,6 +22,8 @@ void print(const V& v){
   }
 }
 
+using namespace ga;
+
 int main(){
   
   typedef  std::vector<int> Genome;

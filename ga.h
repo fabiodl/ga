@@ -4,24 +4,16 @@
 #include <algorithm>
 
 namespace ga{
-  
-
-  
-
-
 
   template<typename Evaluation,
-           typename Pop,
-           typename Score>
-  void evaluate(Score& score,const Pop& currPop,Evaluation& evaluation){
-    for (size_t i=0;i<currPop.size();i++){
-      score[i]=evaluation(currPop[i]);      
-    }    
-  }
-
-
+    typename Pop,
+    typename Score>
+    void evaluate(Score& score,const Pop& currPop,Evaluation& evaluation){
+      for (size_t i=0;i<currPop.size();i++){
+        score[i]=evaluation(currPop[i]);      
+      }    
+    }
   
-
   template<typename Evaluation,
            typename Selection,
            typename Crossover,
@@ -29,8 +21,7 @@ namespace ga{
            typename Elitism,
            typename Pop,
            typename Score
-           >
-  
+    >
     void step(Pop& nextPop, const Score& score,const Pop& currPop,
                 Evaluation& evaluation,
                 Selection& selection, 
@@ -56,8 +47,7 @@ namespace ga{
   }
 
   
-  class GaussianInitializer{   
-    
+  class GaussianInitializer{       
     std::default_random_engine generator;
     std::normal_distribution<double> normal;
     size_t popSize,genomeSize;
@@ -80,18 +70,15 @@ namespace ga{
 
 
   class FixedCountTermination{
-    size_t iters,count;
-    
+    size_t iters,count;   
   public:
     FixedCountTermination(size_t _iters):
       iters(_iters),count(0){
-    }
-    
+    }    
     template<typename P,typename S>
     bool operator()(const P&,const S&){
       return (count++)>iters;
     }
-
   };
 
 
@@ -149,43 +136,39 @@ namespace ga{
    
 
  }
-
-
   
 
   class PropoptionalSelection{
 
   public:
-     template<typename P,typename S> void init(const P& ,const S& s){
-       
-     }
+     template<typename P,typename S> void init(const P& ,const S& s){}
 
-    template<typename P,typename S> std::pair<int,int> operator()(const P& ,const S& s){     
-      double tot=0;
-      for (size_t i=0;i<s.size();i++){
-        tot+=s[i];
-      }
-      double target= tot*rand()/RAND_MAX;
-      std::pair<int,int> ret;
-      double sum=0;
-      for (ret.first=0;;ret.first++){
-        sum+=s[ret.first];
-        if (sum>=target) break;
-      }
-      while(true){
-        target= tot*rand()/RAND_MAX;
-        sum=0;
-        for (ret.second=0;ret.second<s.size();ret.second++){
-          sum+=s[ret.second];
-          if (sum>=target&&ret.second!=ret.first) break;
-        }
-        if (ret.second<s.size()) break;
-      }
-      //std::cout<<"selected "<<ret.first<<" and "<<ret.second<<std::endl;
-      return ret;
-    }
-    
-    
+     template<typename P,typename S> std::pair<int,int> operator()(const P& ,const S& s){     
+       double tot=0;
+       for (size_t i=0;i<s.size();i++){
+         tot+=s[i];
+       }
+       double target= tot*rand()/RAND_MAX;
+       std::pair<int,int> ret;
+       double sum=0;
+       for (ret.first=0;;ret.first++){
+         sum+=s[ret.first];
+         if (sum>=target) break;
+       }
+       while(true){
+         target= tot*rand()/RAND_MAX;
+         sum=0;
+         for (ret.second=0;ret.second<s.size();ret.second++){
+           sum+=s[ret.second];
+           if (sum>=target&&ret.second!=ret.first) break;
+         }
+         if (ret.second<s.size()) break;
+       }
+       //std::cout<<"selected "<<ret.first<<" and "<<ret.second<<std::endl;
+       return ret;
+     }
+     
+     
   };
           
   
@@ -270,7 +253,6 @@ namespace ga{
 
 }//ns ga
 
-using namespace ga;
 
 
 

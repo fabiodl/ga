@@ -1,3 +1,6 @@
+#ifndef _GA_H_
+#define _GA_H_
+
 #include <iostream>
 #include <random>
 #include <cstdbool>
@@ -96,6 +99,17 @@ namespace ga{
   };
 
 
+  template<double (*f)(double)>
+  class PrintBestScore{
+  public:
+      template<typename P,typename S>
+      void operator()(const P& , const S& s){
+        int idx= std::max_element(s.begin(),s.end())-s.begin();
+        std::cout<<f(s[idx])<<std::endl;
+      }
+  };
+
+
  template<
    typename Pop,
    typename Evaluation,
@@ -108,7 +122,7 @@ namespace ga{
    typename Log,
    typename Score=std::vector<double>          
    >
- void ga(Init& init,
+ void run(Init& init,
          Termination& termination,
          Evaluation& evaluation,
          Selection& selection, 
@@ -138,7 +152,7 @@ namespace ga{
  }
   
 
-  class PropoptionalSelection{
+  class ProportionalSelection{
 
   public:
      template<typename P,typename S> void init(const P& ,const S& s){}
@@ -253,6 +267,6 @@ namespace ga{
 
 }//ns ga
 
-
+#endif
 
 

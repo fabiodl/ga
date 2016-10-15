@@ -163,7 +163,7 @@ namespace ga{
          tot+=s[i];
        }
        double target= tot*rand()/RAND_MAX;
-       std::pair<int,int> ret;
+       std::pair<size_t,size_t> ret;
        double sum=0;
        for (ret.first=0;;ret.first++){
          sum+=s[ret.first];
@@ -195,7 +195,7 @@ namespace ga{
       for (;i<split;i++){
         g[i]=g1[i];
       }
-      for (;i<g.size();i++){
+      for (;i<static_cast<int>(g.size());i++){
         g[i]=g2[i];
       }    
     }
